@@ -14,12 +14,12 @@ const LoginCard = () => {
   const [loading, setLoading] = useState(false);
 
   return (
-    <div className="bg-white rounded-xl shadow-lg px-8 py-10 w-full max-w-md font-sans">
-      <div className="flex flex-col items-center mb-8">
+    <div className="bg-white rounded-xl shadow-lg px-8 py-8 w-full max-w-md font-sans">
+      <div className="flex flex-col items-center mb-6">
         <LogoSquare />
       </div>
-      <form className="space-y-6">
-        <div>
+      <form className="space-y-4">
+        <div className="mt-[-8px]">
           <Label htmlFor="email" className="text-gray-700 font-medium text-base">Email</Label>
           <Input
             id="email"
@@ -27,7 +27,7 @@ const LoginCard = () => {
             placeholder="Enter your email"
             value={email}
             onChange={e => setEmail(e.target.value)}
-            className="mt-1 h-11 border-gray-300 focus:border-blue-500 focus:ring-blue-400/40 rounded-lg bg-white text-base"
+            className="h-11 border-gray-300 focus:border-blue-500 focus:ring-blue-400/40 rounded-lg bg-white text-base text-black"
             required
             disabled={loading}
           />
@@ -41,7 +41,7 @@ const LoginCard = () => {
               placeholder="Enter your password"
               value={password}
               onChange={e => setPassword(e.target.value)}
-              className="mt-1 h-11 border-gray-300 focus:border-blue-500 focus:ring-blue-400/40 pr-10 rounded-lg bg-white text-base"
+              className="h-11 border-gray-300 focus:border-blue-500 focus:ring-blue-400/40 pr-10 rounded-lg bg-white text-base text-black"
               required
               disabled={loading}
             />
@@ -97,4 +97,4 @@ const LoginCard = () => {
   );
 };
 
-export default LoginCard; 
+export default LoginCard;
