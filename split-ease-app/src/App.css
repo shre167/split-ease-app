@@ -1,0 +1,252 @@
+/* App.css */
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, sans-serif;
+  background: white; /* Changed from gradient to match your screenshot */
+  height: 100%;
+  color: #1a1a1a;
+}
+
+.app-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+
+/* Header Styles */
+.app-header {
+  text-align: center;
+  padding: 2rem 1rem 1rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.app-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.app-subtitle {
+  color: #666;
+  margin-bottom: 2rem;
+}
+
+.features-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.feature-box {
+  flex: 1;
+  text-align: center;
+}
+
+.feature-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.feature-text {
+  font-size: 0.9rem;
+  color: #666;
+  line-height: 1.5;
+}
+
+/* Login Form Styles */
+.login-container {
+  background: #f8f8f8;
+  padding: 2rem 1rem;
+}
+
+.login-form {
+  background: white;
+  padding: 2rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.form-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.form-subtitle {
+  color: #666;
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+}
+
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.password-wrapper {
+  position: relative;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #666;
+  cursor: pointer;
+}
+
+.form-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1rem 0;
+}
+
+.remember-me {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.forgot-password {
+  color: #2563eb;
+  font-size: 0.9rem;
+  text-decoration: none;
+}
+
+.login-button {
+  width: 100%;
+  padding: 0.8rem;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  margin: 1.5rem 0;
+  color: #999;
+}
+
+.divider::before, .divider::after {
+  content: "";
+  flex: 1;
+  border-bottom: 1px solid #eee;
+}
+
+.divider-text {
+  padding: 0 1rem;
+  font-size: 0.8rem;
+}
+
+.google-button {
+  width: 100%;
+  padding: 0.8rem;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.signup-prompt {
+  text-align: center;
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.signup-link {
+  color: #2563eb;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+/* Footer Styles */
+.app-footer {
+  background: #f8f8f8;
+  padding: 2rem 1rem;
+}
+
+.footer-features {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  max-width: 800px;
+  margin: 0 auto 2rem;
+}
+
+.footer-feature {
+  flex: 1;
+  text-align: center;
+}
+
+.footer-feature-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.footer-feature-text {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.copyright {
+  text-align: center;
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.footer-link {
+  color: #2563eb;
+  text-decoration: none;
+  margin: 0 0.3rem;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .features-container, .footer-features {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .login-form {
+    padding: 1.5rem;
+  }
+}
