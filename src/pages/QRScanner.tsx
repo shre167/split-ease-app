@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Html5QrcodeScanner } from 'html5-qrcode';
+import FloatingCalculator from '@/components/Calculator';
 
 const QRScanner = () => {
   useEffect(() => {
@@ -34,6 +35,11 @@ const QRScanner = () => {
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-4">
       <h1 className="text-xl font-semibold mb-6 text-purple-700">Scan UPI QR Code</h1>
       <div id="reader" className="w-full max-w-md" />
+
+      {/* Place the calculator elegantly on the left side */}
+      <div className="fixed left-4 bottom-24 z-40">
+        <FloatingCalculator />
+      </div>
     </div>
   );
 };

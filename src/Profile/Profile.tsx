@@ -30,6 +30,14 @@ const Profile = () => {
   const [user, setUser] = useState<any>(null);
   const navigate = useNavigate();
   
+  // Mock user statistics (in a real app, these would come from your database)
+  const userStats = {
+    totalGroups: 3,
+    totalExpenses: 24,
+    totalSettlements: 8,
+    memberSince: "2024"
+  };
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
       setUser(firebaseUser);
@@ -353,9 +361,36 @@ const Profile = () => {
                 {user?.displayName || "User"}
               </h1>
               <p className="text-gray-600">{user?.email}</p>
+              <p className="text-sm text-gray-500">Member since {userStats.memberSince}</p>
             </div>
           </div>
         </div>
+      </div>
+
+      {/* Statistics Section */}
+      <div className="max-w-md mx-auto px-4 py-6">
+        <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100 mb-6">
+          <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+            📈 Your Activity
+          </h3>
+          
+          <div className="grid grid-cols-3 gap-4 mb-4">
+            <div className="text-center">
+              <div className="text-2xl font-bold text-blue-600">{userStats.totalGroups}</div>
+              <div className="text-xs text-gray-600">Groups</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-green-600">{userStats.totalExpenses}</div>
+              <div className="text-xs text-gray-600">Expenses</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-purple-600">{userStats.totalSettlements}</div>
+              <div className="text-xs text-gray-600">Settlements</div>
+            </div>
+          </div>
+          
+        </div>
+
       </div>
 
       {/* Profile Options */}

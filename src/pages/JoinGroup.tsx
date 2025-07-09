@@ -6,6 +6,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
+import FloatingCalculator from '@/components/Calculator';
 
 const JoinGroup = () => {
   const [code, setCode] = useState('');
@@ -55,6 +56,11 @@ const JoinGroup = () => {
       <Button onClick={handleJoin} className="mt-3">
         Join Group
       </Button>
+
+      {/* Place the calculator elegantly on the left side */}
+      <div className="fixed left-4 bottom-24 z-40">
+        <FloatingCalculator />
+      </div>
     </div>
   );
 };

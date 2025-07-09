@@ -1,13 +1,25 @@
 // components/UpiQRModal.tsx
 import { useEffect, useRef, useState } from "react";
 import jsQR from "jsqr";
+import { addPayment } from '@/lib/firebase';
+import { useAuth } from '@/contexts/AuthContext';
 
 type Props = {
   isOpen: boolean;
   onClose: () => void;
 };
 
+const categorizeExpense = (text: string) => {
+  const essentialKeywords = ['grocery', 'rent', 'medicine', 'transport', 'electricity', 'fees'];
+  const optionalKeywords = ['swiggy', 'zomato', 'netflix', 'shopping', 'amazon', 'snacks'];
+  const lower = text.toLowerCase();
+  if (essentialKeywords.some(k => lower.includes(k))) return 'Essential';
+  if (optionalKeywords.some(k => lower.includes(k))) return 'Optional';
+  return 'Uncategorized';
+};
+
 const UpiQRModal = ({ isOpen, onClose }: Props) => {
+  const { user } = useAuth();
   const [amount, setAmount] = useState("");
   const [scanning, setScanning] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -16,7 +28,6 @@ const UpiQRModal = ({ isOpen, onClose }: Props) => {
 
   useEffect(() => {
     if (scanning) startScanner();
-
     return () => stopScanner();
   }, [scanning]);
 
@@ -40,7 +51,6 @@ const UpiQRModal = ({ isOpen, onClose }: Props) => {
 
   const scanLoop = async () => {
     if (!videoRef.current || !canvasRef.current) return;
-
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");
     const video = videoRef.current;
@@ -62,12 +72,28 @@ const UpiQRModal = ({ isOpen, onClose }: Props) => {
     requestAnimationFrame(scanLoop);
   };
 
-  const handleQRScanned = (data: string) => {
+  const handleQRScanned = async (data: string) => {
     try {
       const url = new URL(data);
       const upiId = url.searchParams.get("pa");
+      const merchant = url.searchParams.get("pn") || "QR Payment";
+
       if (upiId && amount) {
         stopScanner();
+
+        const category = categorizeExpense(merchant || upiId);
+
+        if (user) {
+          await addPayment({
+            userId: user.uid,
+            amount: parseFloat(amount),
+            description: `QR Payment to ${merchant}`,
+            category,
+            type: "spent",
+            createdAt: new Date(),
+          });
+        }
+
         const upiUrl = `upi://pay?pa=${upiId}&pn=SplitEase&am=${amount}&cu=INR&tn=SplitEase%20Payment`;
         window.location.href = upiUrl;
       } else {

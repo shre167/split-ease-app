@@ -7,6 +7,28 @@ import jsQR from 'jsqr';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 
+const CATEGORY_KEYWORDS = [
+  { category: 'Groceries', keywords: ['big bazaar', 'grocer', 'supermarket', 'more', 'd-mart'] },
+  { category: 'Food Delivery', keywords: ['swiggy', 'zomato', 'ubereats', 'foodpanda', 'dominos', 'pizza', 'burger', 'kfc', 'mcdonald'] },
+  { category: 'Entertainment', keywords: ['netflix', 'hotstar', 'prime', 'spotify', 'movie', 'cinema', 'game'] },
+  { category: 'Medical', keywords: ['pharmacy', 'apollo', 'medplus', 'hospital', 'clinic', 'doctor', 'medicine'] },
+  { category: 'Transport', keywords: ['uber', 'ola', 'rapido', 'taxi', 'auto', 'bus', 'train', 'metro', 'cab'] },
+  { category: 'Shopping', keywords: ['amazon', 'flipkart', 'myntra', 'ajio', 'shop', 'mall', 'lifestyle', 'pantaloons'] },
+  { category: 'Utilities', keywords: ['electricity', 'water', 'gas', 'recharge', 'bill', 'broadband', 'wifi', 'internet'] },
+  { category: 'Rent', keywords: ['rent', 'landlord'] },
+  { category: 'Other', keywords: [] },
+];
+
+function autoCategorize(payee = '', description = '') {
+  const text = (payee + ' ' + description).toLowerCase();
+  for (const { category, keywords } of CATEGORY_KEYWORDS) {
+    if (keywords.some(keyword => text.includes(keyword))) {
+      return category;
+    }
+  }
+  return 'Other';
+}
+
 const BottomNavigation = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
@@ -24,6 +46,7 @@ const BottomNavigation = () => {
   const [activeTab, setActiveTab] = useState<'camera' | 'upload'>('camera');
   const [paymentPending, setPaymentPending] = useState(false);
   const [pendingPaymentData, setPendingPaymentData] = useState<any>(null);
+  const [category, setCategory] = useState('');
 
   const handleLogout = async () => {
     try {
@@ -66,7 +89,9 @@ const BottomNavigation = () => {
           upiId: url.searchParams.get("pa") || undefined,
         };
         
-        setPendingPaymentData(paymentData);
+        const suggestedCategory = autoCategorize(payeeName, `QR Payment to ${payeeName}`);
+        setCategory(suggestedCategory);
+        setPendingPaymentData({ ...paymentData, category: suggestedCategory });
         setPaymentPending(true);
         
         redirectToUPI(data);
@@ -240,6 +265,34 @@ const BottomNavigation = () => {
     }
   };
 
+  const handlePaymentConfirmedWithCategory = async () => {
+    if (!pendingPaymentData) return;
+    try {
+      const finalPaymentData = {
+        ...pendingPaymentData,
+        category: category || autoCategorize(pendingPaymentData.recipient, pendingPaymentData.description),
+        status: 'settled',
+      };
+      await recordPayment(finalPaymentData);
+      toast({
+        title: "Payment recorded successfully!",
+        description: `₹${pendingPaymentData.amount} paid to ${pendingPaymentData.recipient}`,
+      });
+      setPaymentPending(false);
+      setPendingPaymentData(null);
+      setShowScanner(false);
+      setAmount('');
+      setUpiId('');
+    } catch (error) {
+      console.error('Error recording payment:', error);
+      toast({
+        title: "Error recording payment",
+        description: error instanceof Error ? error.message : "Please try again or contact support",
+        variant: "destructive",
+      });
+    }
+  };
+
   const handlePaymentCancelled = () => {
     setPaymentPending(false);
     setPendingPaymentData(null);
@@ -328,28 +381,31 @@ const BottomNavigation = () => {
 
       {/* Payment Confirmation */}
       {paymentPending && (
-        <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-11/12 max-w-sm relative">
-            <div className="text-center">
-              <div className="text-6xl mb-4">📱</div>
-              <h3 className="text-lg font-semibold mb-2">Payment Initiated</h3>
-              <p className="text-gray-600 mb-4">
-                You were redirected to your UPI app. Please complete the payment and return here.
-              </p>
-              <div className="space-y-3">
-                <button
-                  onClick={handlePaymentConfirmed}
-                  className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700"
-                >
-                  ✅ Payment Completed
-                </button>
-                <button
-                  onClick={handlePaymentCancelled}
-                  className="w-full bg-gray-200 text-gray-700 py-2 rounded-lg hover:bg-gray-300"
-                >
-                  ❌ Cancel Payment
-                </button>
-              </div>
+        <div className="fixed inset-0 flex items-center justify-center bg-black/40 z-50">
+          <div className="bg-white rounded-xl p-6 w-full max-w-sm shadow-xl">
+            <h2 className="text-lg font-bold mb-2">Confirm Payment</h2>
+            <p className="mb-2">Paying <b>₹{pendingPaymentData.amount}</b> to <b>{pendingPaymentData.recipient}</b></p>
+            <label className="block mb-2 font-medium">Category</label>
+            <select
+              className="w-full border rounded-lg px-3 py-2 mb-4"
+              value={category}
+              onChange={e => setCategory(e.target.value)}
+            >
+              {CATEGORY_KEYWORDS.map(opt => (
+                <option key={opt.category} value={opt.category}>{opt.category}</option>
+              ))}
+            </select>
+            <div className="flex gap-2">
+              <button
+                className="flex-1 bg-gradient-to-r from-green-500 to-blue-500 text-white rounded-lg py-2 font-semibold hover:from-green-600 hover:to-blue-600"
+                onClick={async () => {
+                  await handlePaymentConfirmedWithCategory();
+                }}
+              >Confirm</button>
+              <button
+                className="flex-1 bg-gray-200 rounded-lg py-2 font-semibold"
+                onClick={handlePaymentCancelled}
+              >Cancel</button>
             </div>
           </div>
         </div>

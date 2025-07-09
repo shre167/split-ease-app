@@ -35,13 +35,7 @@ const AuthFooter = () => {
       </div>
 
       <div className="mt-12 pt-6 border-t border-white/10">
-        <p className="text-blue-100 text-sm">
-          © 2024 SplitEase. All rights reserved.
-          <span className="mx-2">•</span>
-          <a href="#" className="hover:text-white underline underline-offset-2">Privacy Policy</a>
-          <span className="mx-2">•</span>
-          <a href="#" className="hover:text-white underline underline-offset-2">Terms of Service</a>
-        </p>
+        
       </div>
     </div>
   );

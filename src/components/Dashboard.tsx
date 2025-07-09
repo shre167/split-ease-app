@@ -11,7 +11,6 @@ import {
   addMemberToGroup, 
   deleteGroup,
   calculateUserBalances,
-  debugDatabaseContents,
   type Group 
 } from "@/lib/firebase";
 import DashboardHeader from "./DashboardHeader";
@@ -23,6 +22,7 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Plus, Users, Copy, Share2, Trash2, AlertCircle, CheckCircle } from "lucide-react";
+import FloatingCalculator from './Calculator';
 
 const getFirstNameFromEmail = (email: string): string => {
   if (!email) return 'User';
@@ -309,22 +309,6 @@ const Dashboard = () => {
     }
   };
 
-  const handleDebugDatabase = async () => {
-    if (!userEmail) {
-      alert('No user email available');
-      return;
-    }
-    
-    try {
-      console.log('Starting database debug...');
-      await debugDatabaseContents(userEmail);
-      alert('Check the browser console for debug information!');
-    } catch (error) {
-      console.error('Error in debug:', error);
-      alert('Error running debug. Check console for details.');
-    }
-  };
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
       <DashboardHeader 
@@ -377,13 +361,7 @@ const Dashboard = () => {
               >
                 Join Group
               </Button>
-              <Button 
-                variant="outline" 
-                onClick={handleDebugDatabase}
-                className="border-red-300 hover:bg-red-50 text-red-600"
-              >
-                Debug DB
-              </Button>
+
             </div>
           </div>
 
@@ -412,23 +390,35 @@ const Dashboard = () => {
               </div>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {groups.map((group) => (
-                <div
-                  key={group.id}
-                  onClick={() => navigate(`/group/${group.id}`)}
-                  className="bg-gradient-to-br from-white to-gray-50 rounded-xl p-6 border border-gray-200 shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer group"
-                >
-                  <div className="flex items-start justify-between mb-4">
-                    <div className="flex-1">
-                      <h3 className="font-semibold text-gray-800 text-lg mb-1 group-hover:text-blue-600 transition-colors">
-                        {group.name}
-                      </h3>
-                      <p className="text-sm text-gray-500">
-                        {group.members.length} member{group.members.length !== 1 ? 's' : ''}
-                      </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+              {groups.map((group) => {
+                const userBalance = groupBalances[group.id] ?? 0;
+                return (
+                  <div
+                    key={group.id}
+                    onClick={() => navigate(`/group/${group.id}`)}
+                    className="bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100 rounded-2xl shadow-lg p-6 flex flex-col justify-between hover:scale-105 transition-transform cursor-pointer border border-transparent hover:border-purple-300"
+                  >
+                    <div className="flex items-center gap-3 mb-2">
+                      <div className="w-10 h-10 rounded-full bg-gradient-to-r from-blue-400 to-purple-500 flex items-center justify-center text-white text-xl font-bold shadow">
+                        {group.name.charAt(0).toUpperCase()}
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-lg text-gray-800">{group.name}</h4>
+                        <p className="text-xs text-gray-500">Code: {group.code}</p>
+                      </div>
                     </div>
-                    <div className="flex space-x-1">
+                    <div className="flex justify-between items-end mt-4">
+                      <div>
+                        <div className="text-xs text-gray-500">Members</div>
+                        <div className="font-bold text-blue-700">{group.members.length}</div>
+                      </div>
+                      <div>
+                        <div className="text-xs text-gray-500">Your Balance</div>
+                        <div className={`font-bold ${userBalance > 0 ? 'text-green-600' : userBalance < 0 ? 'text-red-600' : 'text-gray-600'}`}>{formatCurrency(userBalance)}</div>
+                      </div>
+                    </div>
+                    <div className="flex gap-2 mt-4">
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
@@ -451,30 +441,16 @@ const Dashboard = () => {
                       </button>
                     </div>
                   </div>
-                  
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm text-gray-600">Your Balance:</span>
-                      <span className={`font-semibold ${
-                        group.balance > 0 
-                          ? 'text-green-600' 
-                          : group.balance < 0 
-                          ? 'text-red-600' 
-                          : 'text-gray-600'
-                      }`}>
-                        {formatCurrency(group.balance)}
-                      </span>
-                    </div>
-                    
-                    <div className="flex items-center justify-between text-xs text-gray-500">
-                      <span>Code: {group.code}</span>
-                      <span className="bg-gray-100 px-2 py-1 rounded">
-                        {group.balance > 0 ? 'You are owed' : group.balance < 0 ? 'You owe' : 'Settled up'}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              ))}
+                );
+              })}
+              {/* Add Group Card */}
+              <div
+                className="flex flex-col items-center justify-center border-2 border-dashed border-purple-300 rounded-2xl p-6 text-purple-400 hover:bg-purple-50 hover:text-purple-600 cursor-pointer transition-colors"
+                onClick={() => setIsModalOpen(true)}
+              >
+                <div className="w-10 h-10 rounded-full bg-gradient-to-r from-purple-400 to-pink-400 flex items-center justify-center text-white text-2xl mb-2">+</div>
+                <div className="font-semibold">Add Group</div>
+              </div>
             </div>
           )}
         </div>
@@ -684,6 +660,10 @@ const Dashboard = () => {
           </div>
         </div>
       )}
+      {/* Place the calculator elegantly on the left side */}
+      <div className="fixed bottom-16 left-6 z-50">
+        <FloatingCalculator />
+      </div>
     </div>
   );
 };

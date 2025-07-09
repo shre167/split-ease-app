@@ -8,8 +8,7 @@ const LogoSquare = () => (
         <Smartphone className="w-8 h-8 text-white" />
       </div>
     </div>
-    <h1 className="text-4xl font-bold text-black mb-2">SplitEase</h1>
-    <p className="text-black text-lg">Smart expense splitting for modern life</p>
+   
   </div>
 );
 

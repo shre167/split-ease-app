@@ -1,4 +1,5 @@
 import { useState } from "react";
+import FloatingCalculator from "@/components/Calculator";
 
 export default function Dashboard() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -60,6 +61,11 @@ export default function Dashboard() {
           </div>
         </div>
       )}
+
+      {/* Place the calculator elegantly on the left side */}
+      <div className="fixed left-4 bottom-24 z-40">
+        <FloatingCalculator />
+      </div>
     </div>
   );
 }

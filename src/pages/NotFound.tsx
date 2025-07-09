@@ -1,5 +1,6 @@
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
+import FloatingCalculator from "@/components/Calculator";
 
 const NotFound = () => {
   const location = useLocation();
@@ -19,6 +20,11 @@ const NotFound = () => {
         <a href="/" className="text-blue-500 hover:text-blue-700 underline">
           Return to Home
         </a>
+      </div>
+
+      {/* Place the calculator elegantly on the left side */}
+      <div className="fixed left-4 bottom-24 z-40">
+        <FloatingCalculator />
       </div>
     </div>
   );

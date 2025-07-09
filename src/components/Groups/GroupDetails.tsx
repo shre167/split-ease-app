@@ -37,6 +37,7 @@ import { toast } from "sonner";
 import AddExpenseModal from "./AddExpenseModal";
 import ExpenseDetailModal from "./ExpenseDetailModal";
 import BorrowRequestModal from "./BorrowRequestModal";
+import FloatingCalculator from '../Calculator';
 
 interface GroupMember {
   id: string;
@@ -766,6 +767,11 @@ const GroupDetails = () => {
         currentUserId={currentUserId}
         groupId={groupId || ""}
       />
+
+      {/* Place the calculator elegantly on the left side */}
+      <div className="fixed bottom-20 left-8 z-50">
+        <FloatingCalculator />
+      </div>
     </div>
   );
 };
