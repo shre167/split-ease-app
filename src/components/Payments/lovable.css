@@ -1,0 +1,221 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* SplitEase Design System - Gradient Header Theme with Blue/Purple Tones */
+
+@layer base {
+  :root {
+    /* Primary Gradient Colors (Blue/Purple) */
+    --primary: 247 70% 45%; /* Deep purple #6A11CB equivalent */
+    --primary-foreground: 0 0% 100%;
+    --primary-light: 216 98% 52%; /* Bright blue #2575FC equivalent */
+    --primary-hover: 247 70% 40%;
+    
+    /* Secondary Colors (Deep Navy for buttons) */
+    --secondary: 240 30% 12%; /* Deep navy #1E1E2F equivalent */
+    --secondary-foreground: 0 0% 100%;
+    --secondary-light: 240 30% 20%;
+    
+    /* Accent Colors (Soft pastels) */
+    --accent: 210 40% 95%; /* Very light blue */
+    --accent-foreground: 240 30% 12%;
+    --accent-hover: 210 40% 90%;
+    
+    /* Background Colors */
+    --background: 210 20% 98%; /* #F8F9FB equivalent */
+    --foreground: 240 30% 12%; /* Dark navy text */
+    --card: 0 0% 100%; /* Pure white cards */
+    --card-foreground: 240 30% 12%;
+    --muted: 210 20% 96%; /* Light gray */
+    --muted-foreground: 240 10% 45%; /* Medium gray text */
+    
+    /* Border and Input Colors */
+    --border: 210 20% 90%; /* Soft light gray border */
+    --input: 210 20% 98%; /* Very light input background */
+    --ring: 247 70% 45%; /* Focus ring matches primary */
+    
+    /* Status Colors */
+    --success: 142 76% 45%; /* Green for received money */
+    --success-foreground: 0 0% 100%;
+    --danger: 0 72% 55%; /* Red for spent money */
+    --danger-foreground: 0 0% 100%;
+    --warning: 35 95% 55%; /* Orange for pending */
+    --warning-foreground: 0 0% 100%;
+    
+    /* Semantic UI Colors */
+    --destructive: 0 72% 55%;
+    --destructive-foreground: 0 0% 100%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 30% 12%;
+    
+    /* Design System Values */
+    --radius: 1.25rem; /* More rounded for modern feel */
+    
+    /* Custom Gradients */
+    --gradient-header: linear-gradient(135deg, hsl(247 70% 45%), hsl(216 98% 52%));
+    --gradient-fab: linear-gradient(135deg, hsl(247 70% 50%), hsl(216 98% 60%));
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(210 20% 98%));
+    --gradient-active: linear-gradient(135deg, hsl(247 70% 45%), hsl(216 98% 52%));
+    
+    /* Enhanced Shadows */
+    --shadow-soft: 0 2px 8px -2px hsl(240 30% 12% / 0.08);
+    --shadow-card: 0 4px 12px -2px hsl(240 30% 12% / 0.10);
+    --shadow-fab: 0 8px 24px -4px hsl(247 70% 45% / 0.35);
+    --shadow-inner: inset 0 1px 2px hsl(0 0% 100% / 0.5);
+    --shadow-header: 0 4px 20px -4px hsl(247 70% 45% / 0.25);
+    
+    /* Animation */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+
+  .dark {
+    --primary: 247 70% 55%;
+    --primary-foreground: 240 30% 12%;
+    --primary-light: 216 98% 62%;
+    --primary-hover: 247 70% 60%;
+    
+    --secondary: 240 30% 8%;
+    --secondary-foreground: 0 0% 95%;
+    --secondary-light: 240 30% 15%;
+    
+    --accent: 240 30% 15%;
+    --accent-foreground: 0 0% 95%;
+    --accent-hover: 240 30% 20%;
+    
+    --background: 240 30% 6%;
+    --foreground: 0 0% 95%;
+    --card: 240 30% 8%;
+    --card-foreground: 0 0% 95%;
+    --muted: 240 30% 12%;
+    --muted-foreground: 240 10% 65%;
+    
+    --border: 240 30% 18%;
+    --input: 240 30% 12%;
+    --ring: 247 70% 55%;
+    
+    --gradient-header: linear-gradient(135deg, hsl(247 70% 25%), hsl(216 98% 35%));
+    --gradient-fab: linear-gradient(135deg, hsl(247 70% 55%), hsl(216 98% 62%));
+    --gradient-card: linear-gradient(145deg, hsl(240 30% 8%), hsl(240 30% 12%));
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+  }
+  
+  /* Typography */
+  h1, h2, h3 {
+    @apply font-bold tracking-tight;
+  }
+  
+  h1 {
+    @apply text-2xl;
+  }
+  
+  .text-greeting {
+    @apply text-3xl font-bold;
+  }
+  
+  .text-welcome {
+    @apply text-sm font-light text-muted-foreground;
+  }
+  
+  /* Custom scrollbar */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    @apply bg-muted;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    @apply bg-border rounded-full;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-muted-foreground;
+  }
+}
+
+@layer components {
+  /* Gradient Header */
+  .gradient-header {
+    background: var(--gradient-header);
+    box-shadow: var(--shadow-header);
+  }
+  
+  /* FAB with gradient */
+  .fab-gradient {
+    background: var(--gradient-fab);
+    box-shadow: var(--shadow-fab);
+    transition: var(--transition-bounce);
+  }
+  
+  .fab-gradient:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 12px 32px -6px hsl(247 70% 45% / 0.4);
+  }
+  
+  /* Card with inner shadow */
+  .card-highlight {
+    background: var(--gradient-card);
+    box-shadow: var(--shadow-card), var(--shadow-inner);
+  }
+  
+  /* Payment card animations */
+  .payment-card {
+    transition: var(--transition-smooth);
+    box-shadow: var(--shadow-soft);
+  }
+  
+  .payment-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-card);
+  }
+  
+  /* Active tab gradient circle */
+  .tab-active {
+    position: relative;
+  }
+  
+  .tab-active::before {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    background: var(--gradient-active);
+    border-radius: 50%;
+    z-index: -1;
+    opacity: 0.15;
+  }
+  
+  /* Pill-shaped buttons */
+  .btn-pill {
+    @apply rounded-full px-6 py-3;
+  }
+  
+  /* Gradient text */
+  .text-gradient {
+    background: var(--gradient-header);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
