@@ -17,16 +17,17 @@ It integrates **UPI payments** and an **AI-powered assistant** to help users not
 
 ## 📸 Screenshots  
 
-![Dashboard](<img width="1864" height="791" alt="image" src="https://github.com/user-attachments/assets/5c386c2e-3d01-422a-b5f3-f34ec84de06a" />)  
+![Dashboard](https://github.com/user-attachments/assets/5c386c2e-3d01-422a-b5f3-f34ec84de06a)  
 *Dashboard view of SplitEase*  
 
-![Group Expenses](<img width="1276" height="798" alt="image" src="https://github.com/user-attachments/assets/88b9a95d-b647-4922-bd36-c52052375573" />) (<img width="1631" height="801" alt="image" src="https://github.com/user-attachments/assets/da7f88ca-b61a-4a96-ac68-db5136578a31" />) 
+![Group Expenses – View 1](https://github.com/user-attachments/assets/88b9a95d-b647-4922-bd36-c52052375573)  
+![Group Expenses – View 2](https://github.com/user-attachments/assets/da7f88ca-b61a-4a96-ac68-db5136578a31)  
 *Managing group expenses easily*  
 
-![Needs vs Wants](<img width="1230" height="797" alt="image" src="https://github.com/user-attachments/assets/9ab0701e-0b11-4e79-821c-b2ce3b21e1b4" />)  
+![Needs vs Wants](https://github.com/user-attachments/assets/9ab0701e-0b11-4e79-821c-b2ce3b21e1b4)  
 *AI-powered Needs vs Wants analysis*  
 
-![UPI Flow](<img width="1074" height="450" alt="image" src="https://github.com/user-attachments/assets/449077f7-f6d4-4b98-a413-a8cbf2760651" />)  
+![UPI Flow](https://github.com/user-attachments/assets/449077f7-f6d4-4b98-a413-a8cbf2760651)  
 *Seamless UPI payment flow*  
 
 
