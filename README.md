@@ -1,4 +1,4 @@
-# 💸 SplitEase – UPI Powered Smart Expense Manager  
+# 💸 SplitEase – UPI Powered Smart Expense Manager!
 
 
 **SplitEase** is a smart and intuitive application that simplifies both **group expense sharing** and **personal financial management**.  
